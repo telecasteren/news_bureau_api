@@ -15,7 +15,7 @@
 
 ### Motivation letter
 
-Tough call.
+Tough call. I decided to build the REST API with Express.js, because I want to become a fullstack developer. It's important to understand whats going on under the hood, and to know how everything is wired together, is in my opinion the key to create great software. And also, I've fallen in love with programming. :)
 
 ---
 
@@ -28,19 +28,20 @@ Tough call.
 
 ```bash
 src/
-  routes/
-    articles.ts
-    users.ts
-  controllers/
-    articlesController.ts
-    usersController.ts
-  models/
-    article.ts
-    user.ts
-  middleware/
-  config/
-  app.ts
-  server.ts
+|-  routes/
+|    articles.ts
+|    users.ts
+|-  controllers/
+|    articlesController.ts
+|    authController.ts
+|    usersController.ts
+|-  models/
+|    article.ts
+|    user.ts
+|-  middleware/
+|-  config/
+|-  app.ts
+|-  server.ts
 ```
 
 ---
