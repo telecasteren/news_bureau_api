@@ -1,6 +1,11 @@
 /*TAILWIND COLOURS USED
 
+Background: bg-white dark:bg-gray-950
+
 Article section border: border-amber-400
+
+Create / Auth buttons: border-amber-400 hover:bg-amber-400
+Submit buttons: bg-blue-400
 
 Search input: bg-white text-black
 Search button: bg-blue-600 hover:bg-blue-500

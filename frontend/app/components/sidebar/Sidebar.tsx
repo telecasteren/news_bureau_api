@@ -180,6 +180,9 @@ const Sidebar = () => {
                             : [navNormalState, navHoverState].join(" "),
                         ].join(" ")
                       }
+                      {...(item.id === "docs"
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                     >
                       {({ isActive }) => (
                         <>

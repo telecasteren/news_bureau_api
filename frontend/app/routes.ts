@@ -11,5 +11,7 @@ export default [
     route("users/articles", "routes/users/articles/UserArticles.tsx"),
     route("articles", "routes/articles/articles.tsx"),
     route("articles/:id", "routes/articles/single-article.tsx"),
+    route("help", "routes/help/help.tsx"),
+    route("help/:id", "routes/help/[id].tsx"),
   ]),
 ] satisfies RouteConfig;

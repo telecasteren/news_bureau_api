@@ -1,4 +1,4 @@
-# NEWS BUREAU - REST API
+# THE NEWS BUREAU - REST API
 
 **Author:** Tele Caster Nilsen<br/>
 **Website:** [www.telecasternilsen.com](https://telecasternilsen.com)
@@ -9,7 +9,6 @@
 - [Technologies](#technologies)
 - [Project structure](#project-structure)
 - [Get started](#get-started)
-- [Resources](#resources)
 
 ---
 
