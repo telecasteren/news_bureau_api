@@ -14,13 +14,6 @@ import type { Article } from "../../models/article.js";
 export const queryArticle = asyncHandler(async (req, res) => {
   const { title, body, category } = req.query;
 
-  if (!title && !body && !category) {
-    return res.status(400).json({
-      error:
-        "At least one of title, body and category must be present in the query.",
-    });
-  }
-
   const conditions: string[] = [];
   const params: any[] = [];
 

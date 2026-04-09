@@ -12,13 +12,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 export const postArticle = asyncHandler(async (req, res) => {
   const { title = null, body = null, category = null } = req.body;
   const submitted_by = req.user.id;
-  const created_at = new Date();
-
-  if (!title || !body || !category) {
-    return res.status(400).json({
-      error: "title, body and category are required",
-    });
-  }
+  const created_at = new Date().toISOString();
 
   if (!submitted_by) {
     return res.status(401).json({

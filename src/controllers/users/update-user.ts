@@ -6,13 +6,15 @@ import type { User } from "../../models/user.js";
 /**
  * Updates fields on the authenticated user's own account.
  *
- * Only `email` is currently supported.
- * Returns 403 if the path ID does not match `req.user.id`.
+ * Only `email` is currently supported, but the function is kept scalable.
+ * Returns 403 if the params ID does not match `req.user.id`.
  * Returns 400 if no supported fields are provided.
  */
 export const updateUser = asyncHandler(async (req, res) => {
   const userId = Number(req.params.id);
+  const userEmail = req.body.email;
 
+  // authorize requesting user as user to update
   if (userId !== req.user.id) {
     return res.status(403).json({
       error: "Not allowed. Users can only update their own data",
@@ -22,9 +24,10 @@ export const updateUser = asyncHandler(async (req, res) => {
   const fields = [];
   const values = [];
 
-  if (req.body.email) {
+  // scalable for more fields like username etc
+  if (userEmail) {
     fields.push("email = ?");
-    values.push(req.body.email);
+    values.push(userEmail);
   }
 
   if (fields.length === 0) {

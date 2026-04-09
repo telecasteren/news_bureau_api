@@ -1,14 +1,23 @@
 import { Router } from "express";
-import { validateToken } from "../../middleware/auth/validate/validate-token.js";
-import {
-  validateUserId,
-  validatePartialUserData,
-} from "../../middleware/auth/validate/validate-user.js";
+
+// validation
+import { validateToken } from "../../middleware/auth/validate/token.js";
+import { validateUserId } from "../../middleware/auth/validate/user-id.js";
+import { validateBody } from "../../middleware/auth/validate/body.js";
+import { validateQuery } from "../../middleware/auth/validate/query.js";
+
+// controllers
 import { getAllUsers } from "../../controllers/users/get-all.js";
 import { getUserById } from "../../controllers/users/get-by-id.js";
 import { queryUsers } from "../../controllers/users/query-users.js";
 import { updateUser } from "../../controllers/users/update-user.js";
 import { deleteUser } from "../../controllers/users/delete-user.js";
+import {
+  partialUserDataSchema,
+  userIdParamSchema,
+} from "../../middleware/auth/schemas/user.js";
+import { userEmailSchema } from "../../middleware/auth/schemas/user.js";
+import { validateParams } from "../../middleware/auth/validate/params.js";
 
 const router = Router();
 
@@ -43,7 +52,12 @@ const router = Router();
  *       401:
  *         $ref: '#/components/responses/Unauthorized'
  */
-router.get("/search", validateToken, queryUsers);
+router.get(
+  "/search",
+  validateToken,
+  validateQuery(userEmailSchema),
+  queryUsers,
+);
 
 /**
  * @swagger
@@ -75,7 +89,12 @@ router.get("/search", validateToken, queryUsers);
  *       401:
  *         $ref: '#/components/responses/Unauthorized'
  */
-router.get("/:id", validateToken, getUserById);
+router.get(
+  "/:id",
+  validateToken,
+  validateParams(userIdParamSchema),
+  getUserById,
+);
 
 /**
  * @swagger
@@ -143,7 +162,7 @@ router.patch(
   "/:id",
   validateToken,
   validateUserId,
-  validatePartialUserData,
+  validateBody(partialUserDataSchema),
   updateUser,
 );
 

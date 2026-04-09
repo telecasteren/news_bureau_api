@@ -1,6 +1,12 @@
 ## TO DO
 
+## IMPORTANT:
+
+- error handling express.js
 - ask teacher about JSDoc amount and redundancy
+
+DONE:
+
 - Test all endpoints with Postman
   - zod validation and error handling: ✅
     ARTICLES:

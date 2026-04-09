@@ -6,7 +6,7 @@ import { asyncHandler } from "../../utils/async-handler.js";
 import { sendUserResponse } from "../../utils/send-user-response.js";
 
 export const registerUser = asyncHandler(async (req, res) => {
-  const created_at = new Date();
+  const created_at = new Date().toISOString();
   const { email = null, password = null } = req.body;
 
   if (!email || !password) {

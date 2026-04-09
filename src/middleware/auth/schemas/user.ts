@@ -13,6 +13,10 @@ const userIdSchema = z.object({
   id: z.string().regex(/^\d+$/, "ID must be a positive number"),
 });
 
+const userIdParamSchema = z.object({
+  id: z.coerce.number().int().positive(),
+});
+
 const userEmailSchema = z.object({
   email: z.email("Email must be a valid email"),
 });
@@ -36,6 +40,7 @@ export {
   userTokenSchema,
   userIdSchema,
   userEmailSchema,
+  userIdParamSchema,
   requiredUserDataSchema,
   partialUserDataSchema,
 };

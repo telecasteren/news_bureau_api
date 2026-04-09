@@ -1,5 +1,17 @@
 import { Router } from "express";
-import { validateToken } from "../../middleware/auth/validate/validate-token.js";
+
+// validation
+import { validateToken } from "../../middleware/auth/validate/token.js";
+import { validateBody } from "../../middleware/auth/validate/body.js";
+import { validateQuery } from "../../middleware/auth/validate/query.js";
+import { validateParams } from "../../middleware/auth/validate/params.js";
+import {
+  articleIdSchema,
+  articleSchema,
+  partialArticleSchema,
+} from "../../middleware/auth/schemas/articles.js";
+
+// controllers
 import { getAllArticles } from "../../controllers/articles/get-all.js";
 import { getArticleById } from "../../controllers/articles/get-by-id.js";
 import { postArticle } from "../../controllers/articles/post-article.js";
@@ -45,7 +57,7 @@ const router = Router();
  *       400:
  *         $ref: '#/components/responses/BadRequest'
  */
-router.get("/search", queryArticle);
+router.get("/search", validateQuery(partialArticleSchema), queryArticle);
 
 /**
  * @swagger
@@ -75,7 +87,7 @@ router.get("/search", queryArticle);
  *       404:
  *         $ref: '#/components/responses/NotFound'
  */
-router.get("/:id", getArticleById);
+router.get("/:id", validateParams(articleIdSchema), getArticleById);
 
 /**
  * @swagger
@@ -127,7 +139,7 @@ router.get("/", getAllArticles);
  *       401:
  *         $ref: '#/components/responses/Unauthorized'
  */
-router.post("/", validateToken, postArticle);
+router.post("/", validateToken, validateBody(articleSchema), postArticle);
 
 /**
  * @swagger

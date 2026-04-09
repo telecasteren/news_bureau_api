@@ -5,7 +5,7 @@ import type { User } from "../../models/user.js";
 /**
  * Searches users by email using a case-insensitive exact match.
  *
- * Returns 400 if the `email` query parameter is missing.
+ * Returns 400 if the `email` query parameter is missing or invalid.
  */
 export const queryUsers = asyncHandler(async (req, res) => {
   const email =
@@ -19,5 +19,4 @@ export const queryUsers = asyncHandler(async (req, res) => {
     const users = rows as User[];
     return res.json(users);
   }
-  return res.status(400).json({ error: "Email query parameter is required" });
 });
