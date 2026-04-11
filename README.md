@@ -65,15 +65,34 @@ cd development-platforms-ca
 code . // or open with other IDE
 ```
 
-Start the server
+#### Start the server
+
+_Prerequisites:_
+
+- Install dependencies:
+  ```bash
+  npm install
+  ```
+- Create a new database (news_bureau) with the provided .sql database export (MySQL Workbench or other)
+  - Follow .env.example for DB credentials needed in .env
+- Configure your .env file (follow .env.example)
+  - Generate a random JWT_SECRET:<br/>
+    <b style="color: green">online:</b><br/>
+    [generate-random](https://generate-random.org/base64-string)<br/>
+    <b style="color: green">with node:</b><br/>
+    node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+  - (optional) Add custom PORT
+
+**Then start the server by running:**
 
 ```bash
 npm run dev
 ```
 
-**Base URL:** http://localhost:4000/
+**Base URL:** http://localhost:3000/ <br/>
+_or custom PORT if set_
 
-**Swagger docs:** http://localhost:4000/api-docs/<br/>
+**Swagger docs:** http://localhost:3000/api-docs/<br/>
 _Can be opened in your browser._
 
 Now you can use the API with Postman or any other application by following the API documentation.
@@ -99,7 +118,7 @@ Now you can use the API with Postman or any other application by following the A
 
 [swagger.ts](/config/documentation/swagger.ts) centralises all configuration of the Swagger documentation, including centralising repeated patterns used across routes.
 
-When the server is running, go to **URL:** http://localhost:4000/api-docs/ , to see and test the API documentation. Adjust port to match where the server is running.
+When the server is running, go to **URL:** http://localhost:4000/api-docs/ , to see and test the API documentation. <span style="color: green">Adjust port to match where the server is running.</span>
 
 **!Note!** The config allows a URL selection in the documentation, exposing all the URLs listed in the servers array in the swagger.ts configuration file. When used in production, these should be updated to the actual production and dev URLs. For now, I've listed 'localhost:4000' for prod and 'localhost:3000' for dev.
 
