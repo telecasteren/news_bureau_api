@@ -33,15 +33,19 @@ Tough call. I decided to build the REST API with Express.js, because I want to b
 src/
 |-  routes/
 |    articles.ts
+|    auth.ts
 |    users.ts
 |-  controllers/
-|    articlesController.ts
-|    authController.ts
-|    usersController.ts
+|--  articles/
+|--  auth/
+|--  users/
 |-  models/
 |    article.ts
 |    user.ts
 |-  middleware/
+|--  auth/
+|--  error/
+|--  logs/
 |-  config/
 |-  app.ts
 |-  server.ts
@@ -69,9 +73,25 @@ npm run dev
 
 **Base URL:** http://localhost:4000/
 
-**Swagger docs:** http://localhost:4000/api-docs/
+**Swagger docs:** http://localhost:4000/api-docs/<br/>
+_Can be opened in your browser._
 
 Now you can use the API with Postman or any other application by following the API documentation.
+
+💡 **Recommended testing route:**
+
+```
+- Start by testing all endpoints with empty headers and body
+- Then register a new user (try first with invalid body and then a valid body)
+- Login as the new user (try first with invalid body and then a valid body)
+- Create an article (try first with invalid body and then a valid body)
+- Fetch the article by its id
+- Try to update someone elses article (see database export for article ids)
+- Update the article (try first with empty or invalid body, then with one or more fields)
+- Search for the article by querying title, body or category
+- Delete the article
+- Fetch all articles
+```
 
 ---
 
@@ -89,6 +109,7 @@ When the server is running, go to **URL:** http://localhost:4000/api-docs/ , to 
 
 - [Error handling with Express.js](https://expressjs.com/en/guide/error-handling.html)
 - [zod validation](https://zod.dev/basics)
+- [Swagger schema objects](https://swagger.io/specification/)
 
 ### AI Usage
 

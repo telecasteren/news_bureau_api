@@ -8,3 +8,7 @@ export interface Article {
   submitted_by: User["id"];
   created_at: Date;
 }
+
+export interface ArticleWithUser extends Article {
+  email: string;
+}
