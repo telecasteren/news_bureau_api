@@ -1,5 +1,6 @@
 import { pool } from "../../config/database.js";
 import { asyncHandler } from "../../utils/async-handler.js";
+import { ApiError } from "../../middleware/error/api-error.js";
 import type { Article } from "../../models/article.js";
 
 /**
@@ -25,13 +26,14 @@ export const updateArticle = asyncHandler(async (req, res) => {
   const article = articles[0];
 
   if (!article) {
-    return res.status(404).json({ error: "Article not found" });
+    throw new ApiError("Article not found", 404);
   }
 
   if (Number(article.submitted_by) !== Number(req.user.id)) {
-    return res.status(403).json({
-      error: "Not allowed. Users can only update their own articles",
-    });
+    throw new ApiError(
+      "Not allowed. Users can only update their own articles",
+      403,
+    );
   }
 
   const fields = [];
@@ -54,7 +56,7 @@ export const updateArticle = asyncHandler(async (req, res) => {
   }
 
   if (fields.length === 0) {
-    return res.status(400).json({ error: "No fields to update" });
+    throw new ApiError("No fields to update", 400);
   }
 
   values.push(articleId);

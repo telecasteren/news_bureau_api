@@ -12,5 +12,6 @@ export const validateQuery =
       });
     }
 
+    Object.assign(req.query, result.data);
     next();
   };

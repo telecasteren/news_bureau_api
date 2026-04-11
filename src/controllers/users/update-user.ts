@@ -1,5 +1,6 @@
 import { pool } from "../../config/database.js";
 import { asyncHandler } from "../../utils/async-handler.js";
+import { ApiError } from "../../middleware/error/api-error.js";
 import { sendUserResponse } from "../../utils/send-user-response.js";
 import type { User } from "../../models/user.js";
 
@@ -14,11 +15,11 @@ export const updateUser = asyncHandler(async (req, res) => {
   const userId = Number(req.params.id);
   const userEmail = req.body.email;
 
-  // authorize requesting user as user to update
   if (userId !== req.user.id) {
-    return res.status(403).json({
-      error: "Not allowed. Users can only update their own data",
-    });
+    throw new ApiError(
+      "Not allowed. Users can only update their own data",
+      403,
+    );
   }
 
   const fields = [];
@@ -31,7 +32,7 @@ export const updateUser = asyncHandler(async (req, res) => {
   }
 
   if (fields.length === 0) {
-    return res.status(400).json({ error: "No fields to update" });
+    throw new ApiError("No fields to update", 400);
   }
 
   values.push(userId);

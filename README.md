@@ -97,5 +97,8 @@ During this project, AI tools such as Github CoPilot and Perplexity has been use
 - Explaining concepts related to Express.js, zod and best practices
 - Improving code documentation quality
 - Providing commit message suggestions
+- Debugging, ex: explaining or pointing to where 500 internal server errors
 
-The architecture, implementation and code decisions are all performed by me.
+The file [swagger.ts](src/config/documentation/swagger.ts) is co-authored with CoPilot Codex.
+
+**Important:** this projects architecture, implementation and code decisions are all performed by me.

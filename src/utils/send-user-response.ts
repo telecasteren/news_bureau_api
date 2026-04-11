@@ -6,7 +6,7 @@ export const sendUserResponse = (
   user: UserResponse,
   message: string,
   token?: string,
-  status: number = 200,
+  status = 200,
 ) => {
   res.status(status).json({
     message,

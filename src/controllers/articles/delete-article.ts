@@ -1,5 +1,6 @@
 import { pool } from "../../config/database.js";
 import { asyncHandler } from "../../utils/async-handler.js";
+import { ApiError } from "../../middleware/error/api-error.js";
 import type { Article } from "../../models/article.js";
 
 /**
@@ -15,9 +16,7 @@ export const deleteArticle = asyncHandler(async (req, res) => {
   const userId = req.user.id;
 
   if (!articleId || !userId) {
-    return res.status(400).json({
-      error: "Article ID and User ID are required",
-    });
+    throw new ApiError("Article ID and User ID are required", 400);
   }
 
   const [rows] = await pool.execute(
@@ -28,17 +27,16 @@ export const deleteArticle = asyncHandler(async (req, res) => {
   const article = articles[0];
 
   if (!article) {
-    return res.status(404).json({
-      error: "Article not found",
-    });
+    throw new ApiError("Article not found", 404);
   }
 
   const authorId = Number(article.submitted_by);
 
   if (authorId !== userId) {
-    return res.status(403).json({
-      error: "Not allowed. Users can only delete their own articles",
-    });
+    throw new ApiError(
+      "Not allowed. Users can only delete their own articles",
+      403,
+    );
   }
 
   await pool.execute(`DELETE FROM articles WHERE id = ?`, [articleId]);

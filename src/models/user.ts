@@ -8,5 +8,5 @@ export interface User {
 export interface UserResponse {
   id: number;
   email: string;
-  created_at: Date;
+  created_at?: Date;
 }

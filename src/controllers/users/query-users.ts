@@ -1,5 +1,6 @@
 import { pool } from "../../config/database.js";
 import { asyncHandler } from "../../utils/async-handler.js";
+import { ApiError } from "../../middleware/error/api-error.js";
 import type { User } from "../../models/user.js";
 
 /**
@@ -11,12 +12,15 @@ export const queryUsers = asyncHandler(async (req, res) => {
   const email =
     typeof req.query.email === "string" ? req.query.email : undefined;
 
-  if (email) {
-    const [rows] = await pool.execute(
-      "SELECT id, email, created_at FROM users WHERE LOWER(email) = LOWER(?)",
-      [email],
-    );
-    const users = rows as User[];
-    return res.json(users);
+  if (!email) {
+    throw new ApiError("Email is missing in query.", 400);
   }
+
+  const [rows] = await pool.execute(
+    "SELECT id, email, created_at FROM users WHERE LOWER(email) = LOWER(?)",
+    [email],
+  );
+
+  const users = rows as User[];
+  return res.json(users);
 });

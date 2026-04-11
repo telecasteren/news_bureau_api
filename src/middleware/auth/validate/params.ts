@@ -12,5 +12,6 @@ export const validateParams =
       });
     }
 
+    Object.assign(req.params, result.data);
     next();
   };

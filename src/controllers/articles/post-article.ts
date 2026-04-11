@@ -1,23 +1,21 @@
 import { ResultSetHeader } from "mysql2";
 import { pool } from "../../config/database.js";
 import { asyncHandler } from "../../utils/async-handler.js";
+import { ApiError } from "../../middleware/error/api-error.js";
 
 /**
  * Creates a new article for the authenticated user.
  *
  * Returns:
- * - 400 if title, body, or category is missing
  * - 401 if no authenticated user is available on the request
  */
 export const postArticle = asyncHandler(async (req, res) => {
   const { title = null, body = null, category = null } = req.body;
   const submitted_by = req.user.id;
-  const created_at = new Date().toISOString();
+  const created_at = new Date();
 
   if (!submitted_by) {
-    return res.status(401).json({
-      error: "Authenticated user is required",
-    });
+    throw new ApiError("Authenticated user is required", 401);
   }
 
   const [result] = await pool.execute<ResultSetHeader>(

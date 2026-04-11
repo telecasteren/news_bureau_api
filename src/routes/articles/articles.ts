@@ -179,7 +179,13 @@ router.post("/", validateToken, validateBody(articleSchema), postArticle);
  *       404:
  *         $ref: '#/components/responses/NotFound'
  */
-router.patch("/:id", validateToken, updateArticle);
+router.patch(
+  "/:id",
+  validateToken,
+  validateParams(articleIdSchema),
+  validateBody(partialArticleSchema),
+  updateArticle,
+);
 
 /**
  * @swagger
@@ -215,6 +221,11 @@ router.patch("/:id", validateToken, updateArticle);
  *       404:
  *         $ref: '#/components/responses/NotFound'
  */
-router.delete("/:id", validateToken, deleteArticle);
+router.delete(
+  "/:id",
+  validateToken,
+  validateParams(articleIdSchema),
+  deleteArticle,
+);
 
 export default router;

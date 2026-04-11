@@ -2,7 +2,6 @@ import { Router } from "express";
 
 // validation
 import { validateToken } from "../../middleware/auth/validate/token.js";
-import { validateUserId } from "../../middleware/auth/validate/user-id.js";
 import { validateBody } from "../../middleware/auth/validate/body.js";
 import { validateQuery } from "../../middleware/auth/validate/query.js";
 import { validateParams } from "../../middleware/auth/validate/params.js";
@@ -161,7 +160,7 @@ router.get("/", validateToken, getAllUsers);
 router.patch(
   "/:id",
   validateToken,
-  validateUserId,
+  validateParams(userIdParamSchema),
   validateBody(partialUserDataSchema),
   updateUser,
 );

@@ -1,4 +1,5 @@
 import { pool } from "../../config/database.js";
+import { ApiError } from "../../middleware/error/api-error.js";
 import { asyncHandler } from "../../utils/async-handler.js";
 
 /**
@@ -11,15 +12,14 @@ export const deleteUser = asyncHandler(async (req, res) => {
   const userId = Number(req.params.id);
 
   if (!userId) {
-    return res.status(400).json({
-      error: "User ID is required",
-    });
+    throw new ApiError("User ID is required", 400);
   }
 
   if (userId !== req.user.id) {
-    return res.status(403).json({
-      error: "Not allowed. Users can only delete their own user",
-    });
+    throw new ApiError(
+      "Not allowed. Users can only delete their own user",
+      403,
+    );
   }
 
   await pool.execute(`DELETE FROM users WHERE id = ?`, [userId]);

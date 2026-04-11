@@ -8,14 +8,12 @@ import type { Article } from "../../models/article.js";
  * Requires at least one supported query parameter. All supplied filters are
  * combined with AND semantics in the generated SQL query.
  *
- * Returns:
- * - 400 if none of the supported query parameters are provided
  */
 export const queryArticle = asyncHandler(async (req, res) => {
   const { title, body, category } = req.query;
 
   const conditions: string[] = [];
-  const params: any[] = [];
+  const params: string[] = [];
 
   if (title) {
     conditions.push("title LIKE ?");
