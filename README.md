@@ -80,7 +80,9 @@ _Prerequisites:_
     <b style="color: green">online:</b><br/>
     [generate-random](https://generate-random.org/base64-string)<br/>
     <b style="color: green">with node:</b><br/>
+    ```bash
     node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
+    ```
   - (optional) Add custom PORT
 
 **Then start the server by running:**
