@@ -73,8 +73,9 @@ _Prerequisites:_
   ```bash
   npm install
   ```
-- Create a new database (news_bureau) with the provided .sql database export (MySQL Workbench or other)
+- Create a new database (news_bureau) with the provided .sql database export (MySQL Workbench/ other)
   - Follow .env.example for DB credentials needed in .env
+  - [import issues?](#database-issues)
 - Configure your .env file (follow .env.example)
   - Generate a random JWT_SECRET:<br/>
     <b style="color: green">online:</b><br/>
@@ -148,3 +149,35 @@ During this project, AI tools such as Github CoPilot and Perplexity has been use
 The file [swagger.ts](src/config/documentation/swagger.ts) is co-authored with CoPilot Codex.
 
 **Important:** this projects architecture, implementation and code decisions are all performed by me.
+
+---
+
+### Database issues
+
+If you experience issues during import of the .sql dump file, please check:
+
+1. If the import fails due to this error:
+
+```
+ERROR 3546 (HY000) at line 26: @@GLOBAL.GTID_PURGED cannot be changed: the added gtid set must not overlap with @@GLOBAL.GTID_EXECUTED
+```
+
+Open the DB .sql file in your editor, find and comment out or delete the line similar to the following:
+
+```
+SET @@GLOBAL.GTID_PURGED=/*!80000 '+'*/ '3d80be68-2792-11f1-83cf-43e6b8e8612c:1-108';
+```
+
+It's due to a default export setting `--set-gtid-purged=` in MySQL Workbench.
+
+2. If the import fails due to any of these errors or similar wording:
+
+```bash
+ERROR 1840 (HY000): GTID_PURGED can only be set when GTID_EXECUTED is empty.
+
+ERROR 1782 (HY000): Server is running with --enforce-gtid-consistency, but the statement is not safe in this mode.
+
+ERROR 1236 (HY000): Could not find first log file name in binary log index file
+```
+
+<span style="color: red">**Please contact me asap**, and I will swiftly provide you with a fresh export file containing the needed GTID information.</span>
