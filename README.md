@@ -7,7 +7,6 @@
 
 - [Motivation letter](#motivation-letter)
 - [Technologies](#technologies)
-- [Project structure](#project-structure)
 - [Get started](#get-started)
 - [OpenApi Swagger](#openapi-swagger)
 - [Resources](#resources)
@@ -74,6 +73,7 @@ _Prerequisites:_
   npm install
   ```
 - Create a new database (news_bureau) with the provided .sql database export (MySQL Workbench/ other)
+  - Database file: [Dumpxxx.sql](src/config/data/Dump20260412.sql)
   - Follow .env.example for DB credentials needed in .env
   - [import issues?](#database-issues)
 - Configure your .env file (follow .env.example)
@@ -153,6 +153,21 @@ The file [swagger.ts](src/config/documentation/swagger.ts) is co-authored with C
 ---
 
 ### Database issues
+
+Upon exporting from Workbench, the export finished with a warning:
+
+```
+Warning: A partial dump from a server that has GTIDs will by default include the GTIDs of all transactions, even those that changed suppressed parts of the database. If you don't want to restore GTIDs, pass --set-gtid-purged=OFF. To make a complete dump, pass --all-databases --triggers --routines --events.
+```
+
+I've looked into the warning, and tried to add settings `--set-gtid-purged=OFF` to make GTID not included, without luck. From what I could find, it seems the available working version of Workbench for MacOS ARM64, is not matching the optimal version of the app. Not sure its due to that, but it might very well be related.
+
+Personally I don't use Workbench, I've kept to VS Code and DBeaver when working with raw SQL databases. So let me know if this is a known issue to you and you've got some tips on the matter.
+
+**What I have done**<br/>
+I've commented out the line inside the `.sql` dump that includes GTID, in order to make the import work.
+
+<br/>
 
 If you experience issues during import of the .sql dump file, please check:
 
